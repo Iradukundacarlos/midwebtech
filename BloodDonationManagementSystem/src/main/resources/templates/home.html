@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('/images/b2.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: rgba(51, 51, 51, 0.8);
+      padding: 0.8rem;
+      color: white;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      margin: 10px;
+      border-radius: 8px;
+    }
+
+    /* Navbar Styles */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(51, 51, 51, 0.9);
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    /* Center-aligned Links */
+    .nav-center {
+      display: flex;
+      gap: 1.5rem;
+      flex-grow: 1;
+      justify-content: center;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .nav-center a, .nav-right a {
+      color: #ff9800;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-center a:hover, .nav-right a:hover {
+      color: #ffffff;
+    }
+
+    /* Language Switcher Styles */
+    .language-icon {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #ff9800;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: rgba(51, 51, 51, 0.9);
+      min-width: 120px;
+      z-index: 1;
+      border-radius: 5px;
+      margin-top: 5px;
+      animation: fadeIn 0.3s;
+    }
+
+    .dropdown a {
+      color: #ff9800;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown a:hover {
+      background-color: rgba(255, 152, 0, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Main Section Styles */
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* Section Content Styles */
+    .section-content {
+      text-align: left;
+      padding: 1rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #ff9800;
+      margin-top: 2rem;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #e67e22;
+      transform: translateY(-3px);
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: rgba(51, 51, 51, 0.8);
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    footer a {
+      color: #ff9800;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+  <h1>Welcome to the Blood Donation Management System</h1>
+</header>
+
+<!-- Navigation Bar -->
+<nav>
+  <div class="nav-center">
+    <a th:href="@{/about}">About Us</a>
+    <a th:href="@{/why-donate}">Why Donate?</a>
+    <a th:href="@{/#}">Contact Us</a>
+  </div>
+  <div class="nav-right">
+    <div class="language-icon" onclick="toggleDropdown()">🌐</div>
+    <div id="languageDropdown" class="dropdown">
+      <a href="#" th:href="@{/lang/en}">English</a>
+      <a href="#" th:href="@{/lang/fr}">Français</a>
+      <a href="#" th:href="@{/lang/es}">Español</a>
+    </div>
+    <a th:href="@{/register}">Register</a>
+    <a th:href="@{/login}">Login</a>
+  </div>
+</nav>
+
+<!-- Main Section -->
+<main>
+  <h1>Be a Hero, Donate Blood</h1>
+  <p>Every blood donation saves lives. Join us in making a difference and become a donor today.</p>
+
+  <!-- Section: About Blood Donation -->
+  <div class="section-content">
+    <h2>Why Donate Blood?</h2>
+    <p>Blood donation is a vital process that saves millions of lives each year. Your donation can provide essential blood transfusions for patients in need, support surgeries, and help with the treatment of critical illnesses.</p>
+
+    <h2>How It Works</h2>
+    <p>Our system allows you to easily register, find donation centers, and track your donation history. Join a community of life-saving donors and make a lasting impact in your community.</p>
+  </div>
+
+  <!-- Call-to-action Buttons -->
+  <a th:href="@{/register}" class="btn">Join as a Donor</a>
+  <a th:href="@{/why-donate}" class="btn">Learn More</a>
+</main>
+
+<!-- Footer Section -->
+<footer>
+  <p>&copy; 2024 Blood Donation Management System. All rights reserved.</p>
+  <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+<script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById("languageDropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  // Close the dropdown if clicked outside
+  window.onclick = function(event) {
+    if (!event.target.matches('.language-icon')) {
+      const dropdown = document.getElementById("languageDropdown");
+      if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+      }
+    }
+  };
+</script>
+
+</body>
+</html>

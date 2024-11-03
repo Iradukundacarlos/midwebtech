@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('/images/b3.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* Navigation Bar Styles */
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(51, 51, 51, 0.8); /* Matches the color of the login page */
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .navbar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      margin: 10px;
+      color: #ffffff;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    /* Main Section Styles */
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+      animation: slideIn 1.2s ease-out;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #ffeb3b;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Form Styles */
+    form {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    /* Button Styles */
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e67e22;
+      transform: scale(1.05);
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: rgba(51, 51, 51, 0.8); /* Matches login page color */
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    footer a {
+      color: #ff9800;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+  <a th:href="@{/home}">Home</a>
+  <a th:href="@{/about}">About Us</a>
+  <a th:href="@{/why-donate}">Why Donate?</a>
+  <a th:href="@{/contact}">Contact Us</a>
+  <a th:href="@{/register}">Register</a>
+  <a th:href="@{/login}">Login</a>
+</div>
+
+<!-- Header Section -->
+<header>
+  <h1>Register for the Blood Donation Management System</h1>
+</header>
+
+<!-- Main Section -->
+<main>
+  <h2>Create an Account</h2>
+
+  <!-- Registration Form -->
+  <form action="#" th:action="@{/register}" method="post" th:object="${user}">
+    <input type="text" th:field="*{username}" placeholder="Username" required>
+    <input type="email" th:field="*{email}" placeholder="Email" required>
+    <input type="password" th:field="*{password}" placeholder="Password" required>
+
+    <!-- Role selection -->
+    <select th:field="*{role}" required>
+      <option value="" disabled selected>Select your role</option>
+      <option value="ROLE_USER">User</option>
+      <option value="ROLE_MANAGER">Manager</option>
+    </select>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <!-- Message and Login Link -->
+  <p th:text="${message}"></p>
+  <p><a th:href="@{/login}">Already have an account? Log in</a></p>
+</main>
+
+<!-- Footer Section -->
+<footer>
+  <p>&copy; 2024 Blood Donation Management System. All rights reserved.</p>
+  <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+</body>
+</html>

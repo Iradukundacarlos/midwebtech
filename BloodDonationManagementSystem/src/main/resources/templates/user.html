@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Page</title>
+  <style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #ece9e6, #ffffff);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin: 1.5rem 0;
+        animation: fadeIn 1s ease-out;
+    }
+
+    a {
+        color: #0073e6;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+    /* Notification Section */
+    #user-notifications {
+        width: 80%;
+        max-width: 500px;
+        background: #f9f9f9;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+        text-align: center;
+        animation: slideInFromBottom 1s ease-out;
+    }
+
+    #notification-count {
+        color: #ff9800;
+        font-weight: bold;
+    }
+
+    .notification-item {
+        background: #e3f2fd;
+        border-left: 4px solid #42a5f5;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 5px;
+        opacity: 0;
+        animation: fadeInUp 0.8s forwards;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideInFromBottom {
+        from { transform: translateY(100px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from { transform: translateY(10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Notification Badge */
+    #notification-count::after {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #ff9800;
+        border-radius: 50%;
+        margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Welcome to the User Page</h1>
+
+<div>
+  <p th:text="${message}"></p>
+</div>
+
+<p><a th:href="@{/logout}">Logout</a></p>
+
+<div id="user-notifications">
+  <h3>Notifications <span id="notification-count"></span></h3>
+  <div id="user-notification-list">
+    <!-- Notifications will be appended here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  async function fetchUserNotifications() {
+      const response = await fetch('/notifications/user/unread');
+      const notifications = await response.json();
+      const notificationListDiv = document.getElementById('user-notification-list');
+
+      notificationListDiv.innerHTML = ''; // Clear previous notifications
+      notifications.forEach(notification => {
+          const notificationItem = document.createElement('div');
+          notificationItem.className = 'notification-item';
+          notificationItem.innerHTML = `
+              <strong>${notification.title}</strong>
+              <p>${notification.message}</p>
+          `;
+          notificationListDiv.appendChild(notificationItem);
+      });
+
+      // Update unread notification count
+      document.getElementById('notification-count').innerText = notifications.length;
+
+      // Mark notifications as read after displaying
+      markAllNotificationsAsRead();
+  }
+
+  async function markAllNotificationsAsRead() {
+      await fetch('/notifications/user/mark-all-as-read', { method: 'PUT' });
+  }
+
+  // Fetch notifications on page load
+  window.onload = fetchUserNotifications;
+</script>
+
+</body>
+</html>
